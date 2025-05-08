@@ -17,6 +17,12 @@ class Player {
     }
 
     update() {
+        if (keyIsDown(65)) {
+            this.x -= this.vel
+        }
 
+        if (keyIsDown(68)) {
+            this.x += this.vel
+        }
     }
 }
