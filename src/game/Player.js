@@ -24,5 +24,6 @@ class Player {
         if (keyIsDown(68)) {
             this.x += this.vel
         }
+
     }
 }
