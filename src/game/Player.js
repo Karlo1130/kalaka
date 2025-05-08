@@ -9,4 +9,14 @@ class Player {
 
        this.vel = 10
     }
+
+    draw() {
+
+        fill(0)
+        rect(this.x, this.y, this.width, this.height)
+    }
+
+    update() {
+
+    }
 }
