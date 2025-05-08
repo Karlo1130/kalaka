@@ -1,19 +1,19 @@
 class Player {
 
-    constructor(x, y) {
-       this.x = x
-       this.y = y 
+    constructor(x, y, sprite) {
+        this.x = x
+        this.y = y 
 
-       this.width = 200
-       this.height = 200
+        this.sprite = sprite
+        
+        this.width = sprite.width
+        this.height = sprite.height
 
-       this.vel = 10
+        this.vel = 10
     }
 
     draw() {
-
-        fill(0)
-        rect(this.x, this.y, this.width, this.height)
+        image(this.sprite, this.x, this.y)
     }
 
     update() {

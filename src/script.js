@@ -1,11 +1,18 @@
-const width = 1000
+const width = 1200
 const height = 800
 
-const player = new Player(width/2, height/2)
+var player
+var img
+
+function preload() {
+    img = loadImage('assets/images/player.png')
+
+}
 
 function setup() {
-    createCanvas(1000, 800)
-
+    createCanvas(width, height)
+    player = new Player(width/2, height/2, img)
+    
 }
 
 function draw() {
