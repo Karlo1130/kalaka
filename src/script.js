@@ -4,6 +4,7 @@ const height = 800
 var player
 var playerSprite
 var shootTimer = 0
+const timer = 25
 
 var enemys = []
 var enemySprite
@@ -78,7 +79,7 @@ function update() {
     })
 
     if (keyIsDown(32)) {
-        if (shootTimer > 30) {
+        if (shootTimer > timer) {
             bullets.push(new Bullet(player.x, player.y, playerBulletSprite, "Enemy"))
             shootTimer = 0
         }

@@ -9,7 +9,7 @@ class Player {
         this.width = sprite.width
         this.height = sprite.height
 
-        this.vel = 10
+        this.vel = 7
     }
 
     draw() {
