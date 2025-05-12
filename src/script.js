@@ -3,8 +3,6 @@ const height = 800
 
 var player
 var playerSprite
-var shootTimer = 0
-const timer = 25
 
 var enemys = []
 
@@ -37,7 +35,7 @@ function setup() {
     createCanvas(width, height)
     player = new Player(width/2, height * 0.9, playerSprite, playerBulletSprite)
 
-    startLvl3()
+    startLvl2()
 }
 
 function draw() {
@@ -57,7 +55,6 @@ function draw() {
 }
 
 function update() {
-    shootTimer++
 
     player.update()
 
@@ -87,9 +84,9 @@ function update() {
     })
 
     if (keyIsDown(32)) {
-        if (shootTimer > timer) {
+        if (player.shootTimer > player.shootTime) {
             bullets.push(new Bullet(player.x, player.y, playerBulletSprite, "Enemy"))
-            shootTimer = 0
+            player.shootTimer = 0
         }
 
     }
