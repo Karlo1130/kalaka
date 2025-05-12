@@ -13,12 +13,14 @@ var playerBulletSprite
 
 function preload() {
     playerSprite = loadImage('assets/images/player.png')
-    redEnemySprite = loadImage('assets/images/enemy.png')
-    pinkEnemySprite = loadImage('assets/images/enemy.png')
-    greenEnemySprite = loadImage('assets/images/enemy.png')
-    blueEnemySprite = loadImage('assets/images/enemy.png')
-    playerBulletSprite = loadImage('assets/images/bullet.png')
-    enemyBulletSprite = loadImage('assets/images/bullet.png')
+    redEnemySprite = loadImage('assets/images/redEnemy.png')
+    pinkEnemySprite = loadImage('assets/images/pinkEnemy.png')
+    greenEnemySprite = loadImage('assets/images/greenEnemy.png')
+    blueEnemySprite = loadImage('assets/images/blueEnemy.png')
+    purpleEnemySprite = loadImage('assets/images/purpleEnemy.png')
+    yellowEnemySprite = loadImage('assets/images/yellowEnemy.png')
+    playerBulletSprite = loadImage('assets/images/playerBullet.png')
+    enemyBulletSprite = loadImage('assets/images/enemyBullet.png')
 
 }
 
@@ -26,7 +28,7 @@ function setup() {
     createCanvas(width, height)
     player = new Player(width/2, height * 0.9, playerSprite, playerBulletSprite)
 
-    startLvl1()
+    startLvl3()
 }
 
 function draw() {
