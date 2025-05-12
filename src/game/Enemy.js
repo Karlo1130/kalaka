@@ -9,6 +9,8 @@ class Enemy{
         this.width = sprite.width
         this.height = sprite.height
 
+        this.destroy = false
+
         this.vel = 10
     }
 
