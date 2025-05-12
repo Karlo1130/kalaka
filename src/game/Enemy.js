@@ -1,8 +1,10 @@
 class Enemy{
 
-    constructor(x, y, sprite) {
+    constructor(x, y, sprite, type) {
         this.x = x
         this.y = y 
+
+        this.type = type
 
         this.sprite = sprite
         

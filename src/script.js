@@ -7,16 +7,24 @@ var shootTimer = 0
 const timer = 25
 
 var enemys = []
-var enemySprite
+
+const enemyType = {
+    green: 'green',
+    red: 'red',
+    pink: 'pink',
+    blue: 'blue',
+    purple: 'purple',
+    yellow: 'yellow'
+}
 
 var bullets = []
 var playerBulletSprite
 
 function preload() {
     playerSprite = loadImage('assets/images/player.png')
+    greenEnemySprite = loadImage('assets/images/greenEnemy.png')
     redEnemySprite = loadImage('assets/images/redEnemy.png')
     pinkEnemySprite = loadImage('assets/images/pinkEnemy.png')
-    greenEnemySprite = loadImage('assets/images/greenEnemy.png')
     blueEnemySprite = loadImage('assets/images/blueEnemy.png')
     purpleEnemySprite = loadImage('assets/images/purpleEnemy.png')
     yellowEnemySprite = loadImage('assets/images/yellowEnemy.png')
