@@ -3,6 +3,7 @@ const height = 800
 
 var player
 var playerSprite
+var shootTimer = 0
 
 var enemys
 var enemySprite
@@ -47,6 +48,7 @@ function draw() {
 }
 
 function update() {
+    shootTimer++
 
     player.update()
 
@@ -76,6 +78,10 @@ function update() {
     })
 
     if (keyIsDown(32)) {
-        bullets.push(new Bullet(player.x, player.y, playerBulletSprite, "Enemy"))
+        if (shootTimer > 30) {
+            bullets.push(new Bullet(player.x, player.y, playerBulletSprite, "Enemy"))
+            shootTimer = 0
+        }
+
     }
 }

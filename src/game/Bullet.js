@@ -19,9 +19,6 @@ class Bullet {
 
     draw() {
         image(this.sprite, this.x, this.y)
-        console.log(this.x);
-        console.log(this.y);
-        
     }
 
     update() {
