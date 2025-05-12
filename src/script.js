@@ -5,7 +5,7 @@ var player
 var playerSprite
 var shootTimer = 0
 
-var enemys
+var enemys = []
 var enemySprite
 
 var bullets = []
@@ -13,7 +13,10 @@ var playerBulletSprite
 
 function preload() {
     playerSprite = loadImage('assets/images/player.png')
-    enemySprite = loadImage('assets/images/enemy.png')
+    redEnemySprite = loadImage('assets/images/enemy.png')
+    pinkEnemySprite = loadImage('assets/images/enemy.png')
+    greenEnemySprite = loadImage('assets/images/enemy.png')
+    blueEnemySprite = loadImage('assets/images/enemy.png')
     playerBulletSprite = loadImage('assets/images/bullet.png')
     enemyBulletSprite = loadImage('assets/images/bullet.png')
 
@@ -21,14 +24,9 @@ function preload() {
 
 function setup() {
     createCanvas(width, height)
-    player = new Player(width/2, height/2, playerSprite, playerBulletSprite)
+    player = new Player(width/2, height * 0.9, playerSprite, playerBulletSprite)
 
-    enemys = [
-        new Enemy(width/2, height/4, enemySprite),
-        new Enemy(width/3, height/4, enemySprite),
-    ]
-
-    
+    startLvl1()
 }
 
 function draw() {
