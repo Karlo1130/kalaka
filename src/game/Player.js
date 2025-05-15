@@ -4,6 +4,8 @@ class Player {
         this.x = x
         this.y = y 
 
+        this.life = 10
+
         this.sprite = sprite
         
         this.width = sprite.width
@@ -30,5 +32,12 @@ class Player {
             this.x += this.vel
         }
 
+        if (keyIsDown(32)) {
+            if (this.shootTimer > this.shootTime) {
+                bullets.push(new Bullet(this.x, this.y, playerBulletSprite, "Enemy"))
+                this.shootTimer = 0
+            }
+
+        }
     }
 }

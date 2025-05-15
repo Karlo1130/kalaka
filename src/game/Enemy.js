@@ -13,10 +13,10 @@ class Enemy{
 
         this.destroy = false
 
-        this.vel = 10
         this.shootTime = 300
         this.shootTimer = 0
-        this.moveTime = 200
+
+        this.moveTime = 150
         this.moveTimer = 0
 
         switch (type) {
@@ -25,19 +25,23 @@ class Enemy{
 
                 this.n = 1
                 this.dir = 1
+                this.life = 1
                 break;
 
             case enemyType.blue:
                 this.life = 3
+                this.shootTime = 130
                 
                 break;
             case enemyType.purple:
+                this.n = 1
+                this.dir = 1
                 this.life = 2
                 
                 break;
             case enemyType.yellow:
                 this.life = 7
-                this.shootTime = 150
+                this.shootTime = 70
                 this.moveTime = 100
                 
                 break;
@@ -54,11 +58,7 @@ class Enemy{
 
     update() {
         this.moveTimer++
-
-        if(this.shootTimer > this.shootTime) {
-
-            this.shootTimer = 0
-        }
+        this.shootTimer++
 
         if(this.moveTimer > this.moveTime) {
             this.y += this.height
@@ -73,10 +73,6 @@ class Enemy{
                     
                     this.x += this.width * this.dir
 
-
-                    break;
-                case enemyType.blue:
-
                     break;
                 case enemyType.purple:
 
@@ -90,6 +86,22 @@ class Enemy{
             }
 
             this.moveTimer = 0
+        }
+
+        if(this.shootTimer > this.shootTime) {
+
+            switch (this.type) {
+                case enemyType.blue:
+                case enemyType.yellow:
+
+                    bullets.push(new Bullet(this.x, this.y, enemyBulletSprite, "Player"))
+                    break;
+        
+                default:
+                    break;
+            }
+
+            this.shootTimer = 0
         }
     }
 

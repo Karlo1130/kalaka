@@ -35,7 +35,7 @@ function setup() {
     createCanvas(width, height)
     player = new Player(width/2, height * 0.9, playerSprite, playerBulletSprite)
 
-    startLvl2()
+    startLvl3()
 }
 
 function draw() {
@@ -67,9 +67,16 @@ function update() {
 
         enemys.forEach((enemy) => {
 
+            if (bullet.target == 'Player')
+                return
+
             if (isColliding(bullet, enemy)) {
+
+                enemy.life--
                 bullet.destroy = !bullet.destroy
-                enemy.destroy = !enemy.destroy
+
+                if (enemy.life <= 0)
+                    enemy.destroy = !enemy.destroy
             }
 
             if (enemy.destroy) {
@@ -77,17 +84,15 @@ function update() {
             }
         })
 
+        if (isColliding(bullet, player)){
+            player.life--
+            bullet.destroy = !bullet.destroy
+        }
+
         if (bullet.destroy) {
             bullets.splice(bullets.findIndex(bullet => bullet.destroy), 1)
         }
         
     })
 
-    if (keyIsDown(32)) {
-        if (player.shootTimer > player.shootTime) {
-            bullets.push(new Bullet(player.x, player.y, playerBulletSprite, "Enemy"))
-            player.shootTimer = 0
-        }
-
-    }
 }

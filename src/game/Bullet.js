@@ -13,8 +13,13 @@ class Bullet {
         this.height = sprite.height
 
         this.destroy = false;
-
+        
         this.vel = 20
+
+        if (target == 'Player'){
+            this.vel = -8
+            this.y = y + this.height
+        }
     }
 
     draw() {
