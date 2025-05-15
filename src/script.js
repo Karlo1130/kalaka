@@ -1,5 +1,5 @@
-const width = 1200
-const height = 800
+const Width = 1200
+const Height = 800
 
 var player
 var playerSprite
@@ -32,8 +32,8 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(width, height)
-    player = new Player(width/2, height * 0.9, playerSprite, playerBulletSprite)
+    createCanvas(Width, Height)
+    player = new Player(Width/2, Height * 0.9, playerSprite, playerBulletSprite)
 
     startLvl3()
 }
@@ -79,9 +79,6 @@ function update() {
                     enemy.destroy = !enemy.destroy
             }
 
-            if (enemy.destroy) {
-                enemys.splice(enemys.findIndex(enemy => enemy.destroy), 1)
-            }
         })
 
         if (isColliding(bullet, player)){

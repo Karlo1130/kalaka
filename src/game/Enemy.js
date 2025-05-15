@@ -57,8 +57,18 @@ class Enemy{
     }
 
     update() {
+
         this.moveTimer++
         this.shootTimer++
+
+        if (this.y >= Height - 30) {
+            player.life--
+            this.destroy = !this.destroy
+        }
+
+        if (this.destroy) {
+            enemys.splice(enemys.findIndex(enemy => enemy.destroy), 1)
+        }
 
         if(this.moveTimer > this.moveTime) {
             this.y += this.height
@@ -75,6 +85,13 @@ class Enemy{
 
                     break;
                 case enemyType.purple:
+
+                    this.n = this.n - this.dir
+                    if(this.n != 0) {
+                        this.dir = this.dir * -1
+                    }
+                    
+                    this.x += this.width * this.dir
 
                     break;
                 case enemyType.yellow:
