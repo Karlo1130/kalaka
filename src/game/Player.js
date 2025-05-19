@@ -4,7 +4,7 @@ class Player {
         this.x = x
         this.y = y 
 
-        this.life = 10
+        this.life = 3
 
         this.sprite = sprite
         

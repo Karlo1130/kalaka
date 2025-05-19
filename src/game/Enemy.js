@@ -70,12 +70,18 @@ class Enemy{
             enemys.splice(enemys.findIndex(enemy => enemy.destroy), 1)
         }
 
+        if (isColliding(this, player)) {
+            player.life--
+            this.destroy = !this.destroy
+        }
+
         if(this.moveTimer > this.moveTime) {
             this.y += this.height
 
             switch (this.type) {
                 case enemyType.pink:
 
+                    //movement algorithm
                     this.n = this.n - this.dir
                     if(this.n != 0) {
                         this.dir = this.dir * -1
@@ -86,6 +92,7 @@ class Enemy{
                     break;
                 case enemyType.purple:
 
+                    //movement algorithm
                     this.n = this.n - this.dir
                     if(this.n != 0) {
                         this.dir = this.dir * -1
@@ -109,6 +116,9 @@ class Enemy{
 
             switch (this.type) {
                 case enemyType.blue:
+                case enemyType.red:
+                case enemyType.pink:
+                case enemyType.purple:
                 case enemyType.yellow:
 
                     bullets.push(new Bullet(this.x, this.y, enemyBulletSprite, "Player"))

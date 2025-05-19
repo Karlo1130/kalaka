@@ -1,6 +1,8 @@
 const Width = 1200
 const Height = 800
 
+var points = 0
+
 var player
 var playerSprite
 
@@ -9,6 +11,7 @@ var enemys = []
 const enemyType = {
     green: 'green',
     red: 'red',
+    orange: 'orange',
     pink: 'pink',
     blue: 'blue',
     purple: 'purple',
@@ -40,6 +43,11 @@ function setup() {
 
 function draw() {
     background(150)
+
+    fill(0)
+    textSize(25)
+    text(`POINTS: ${points}`, 10, 30)
+    text(`LIFES: ${player.life}`, Width-110, 30)
 
     player.draw()
 
@@ -75,8 +83,22 @@ function update() {
                 enemy.life--
                 bullet.destroy = !bullet.destroy
 
-                if (enemy.life <= 0)
+                if (enemy.life <= 1){
                     enemy.destroy = !enemy.destroy
+
+                    switch (enemy.type) {
+                        case enemyType.blue:
+                            points += 3
+                            break;
+                        case enemyType.yellow:
+                            points += 10
+                            break;
+                    
+                        default:
+                            points++
+                            break;
+                    }
+                }
             }
 
         })
