@@ -2,13 +2,16 @@ const Width = 1200
 const Height = 800
 
 var points = 0
+var topPunctuations = [1, 2, 3, 4, 5]
+var lvl = 1
+var gameState
 
 var player
 var playerSprite
 
 var enemys = []
 
-const enemyType = {
+const enemyTypes = {
     green: 'green',
     red: 'red',
     orange: 'orange',
@@ -16,6 +19,14 @@ const enemyType = {
     blue: 'blue',
     purple: 'purple',
     yellow: 'yellow'
+}
+
+const gameStates = {
+    startMenu: 'startMenu',
+    loseMenu: 'loseMenu',
+    winMenu: 'winMenu',
+    transition: 'transition',
+    playing: 'playing'
 }
 
 var bullets = []
@@ -36,7 +47,8 @@ function preload() {
 
 function setup() {
     createCanvas(Width, Height)
-    player = new Player(Width/2, Height * 0.9, playerSprite, playerBulletSprite)
+    player = new Player(Width / 2, Height * 0.9, playerSprite, playerBulletSprite)
+    gameState = gameStates.startMenu
 
     startLvl3()
 }
@@ -47,7 +59,8 @@ function draw() {
     fill(0)
     textSize(25)
     text(`POINTS: ${points}`, 10, 30)
-    text(`LIFES: ${player.life}`, Width-110, 30)
+    text(`LIFES: ${player.life}`, Width - 110, 30)
+    text(`LEVEL: ${lvl}`, (Width - 110) / 2, 30)
 
     player.draw()
 
@@ -59,59 +72,95 @@ function draw() {
         bullet.draw()
     })
 
+    switch (gameState) {
+        case gameStates.startMenu:
+            drawStartMenu()
+            break;
+        case gameStates.loseMenu:
+            drawLoseMenu()
+            break;
+        case gameStates.winMenu:
+            drawWinMenu()
+            break;
+        case gameStates.transition:
+            drawTransition()
+            break;
+
+        default:
+            break;
+    }
+
     update()
 }
 
 function update() {
 
-    player.update()
 
-    enemys.forEach((enemy) => {
-        enemy.update()
-    })
 
-    bullets.forEach((bullet) => {
-        bullet.update()
-
-        enemys.forEach((enemy) => {
-
-            if (bullet.target == 'Player')
-                return
-
-            if (isColliding(bullet, enemy)) {
-
-                enemy.life--
-                bullet.destroy = !bullet.destroy
-
-                if (enemy.life <= 1){
-                    enemy.destroy = !enemy.destroy
-
-                    switch (enemy.type) {
-                        case enemyType.blue:
-                            points += 3
-                            break;
-                        case enemyType.yellow:
-                            points += 10
-                            break;
-                    
-                        default:
-                            points++
-                            break;
-                    }
-                }
+    switch (gameState) {
+        case gameStates.startMenu:
+            if (keyIsDown(32)) {
+                gameState = gameStates.playing
             }
+            break;
+        case gameStates.loseMenu:
+            break;
+        case gameStates.winMenu:
+            break;
+        case gameStates.transition:
+            break;
 
-        })
+        default:
+            player.update()
 
-        if (isColliding(bullet, player)){
-            player.life--
-            bullet.destroy = !bullet.destroy
-        }
+            enemys.forEach((enemy) => {
+                enemy.update()
+            })
 
-        if (bullet.destroy) {
-            bullets.splice(bullets.findIndex(bullet => bullet.destroy), 1)
-        }
-        
-    })
+            bullets.forEach((bullet) => {
+                bullet.update()
+
+                enemys.forEach((enemy) => {
+
+                    if (bullet.target == 'Player')
+                        return
+
+                    if (isColliding(bullet, enemy)) {
+
+                        enemy.life--
+                        bullet.destroy = !bullet.destroy
+
+                        if (enemy.life <= 1) {
+                            enemy.destroy = !enemy.destroy
+
+                            switch (enemy.type) {
+                                case enemyTypes.blue:
+                                    points += 3
+                                    break;
+                                case enemyTypes.yellow:
+                                    points += 10
+                                    break;
+
+                                default:
+                                    points++
+                                    break;
+                            }
+                        }
+                    }
+
+                })
+
+                if (isColliding(bullet, player)) {
+                    player.life--
+                    bullet.destroy = !bullet.destroy
+                }
+
+                if (bullet.destroy) {
+                    bullets.splice(bullets.findIndex(bullet => bullet.destroy), 1)
+                }
+
+            })
+            break;
+    }
 
 }

@@ -21,25 +21,25 @@ class Enemy{
 
         switch (type) {
 
-            case enemyType.pink:
+            case enemyTypes.pink:
 
                 this.n = 1
                 this.dir = 1
                 this.life = 1
                 break;
 
-            case enemyType.blue:
+            case enemyTypes.blue:
                 this.life = 3
                 this.shootTime = 130
                 
                 break;
-            case enemyType.purple:
+            case enemyTypes.purple:
                 this.n = 1
                 this.dir = 1
                 this.life = 2
                 
                 break;
-            case enemyType.yellow:
+            case enemyTypes.yellow:
                 this.life = 7
                 this.shootTime = 70
                 this.moveTime = 100
@@ -79,7 +79,7 @@ class Enemy{
             this.y += this.height
 
             switch (this.type) {
-                case enemyType.pink:
+                case enemyTypes.pink:
 
                     //movement algorithm
                     this.n = this.n - this.dir
@@ -90,7 +90,7 @@ class Enemy{
                     this.x += this.width * this.dir
 
                     break;
-                case enemyType.purple:
+                case enemyTypes.purple:
 
                     //movement algorithm
                     this.n = this.n - this.dir
@@ -101,7 +101,7 @@ class Enemy{
                     this.x += this.width * this.dir
 
                     break;
-                case enemyType.yellow:
+                case enemyTypes.yellow:
 
                     break;
         
@@ -115,11 +115,11 @@ class Enemy{
         if(this.shootTimer > this.shootTime) {
 
             switch (this.type) {
-                case enemyType.blue:
-                case enemyType.red:
-                case enemyType.pink:
-                case enemyType.purple:
-                case enemyType.yellow:
+                case enemyTypes.blue:
+                case enemyTypes.red:
+                case enemyTypes.pink:
+                case enemyTypes.purple:
+                case enemyTypes.yellow:
 
                     bullets.push(new Bullet(this.x, this.y, enemyBulletSprite, "Player"))
                     break;
