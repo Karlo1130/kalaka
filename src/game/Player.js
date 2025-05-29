@@ -1,43 +1,28 @@
+
+// Clase que representa la nave del jugador
 class Player {
+  constructor() {
+    this.width = 40;
+    this.height = 40;
+    this.x = width / 2;
+    this.y = height - 60;
+    this.speed = 5;
+  }
 
-    constructor(x, y, sprite) {
-        this.x = x
-        this.y = y 
+  show() {
+    // Dibuja la imagen centrada en x, y
+    imageMode(CENTER);
+    image(playerImg, this.x, this.y, this.width, this.height);
+  }
 
-        this.life = 3
-
-        this.sprite = sprite
-        
-        this.width = sprite.width
-        this.height = sprite.height
-
-        this.shootTime = 25
-        this.shootTimer = 0
-
-        this.vel = 7
+  move() {
+    if (keyIsDown(LEFT_ARROW)) {
+      this.x -= this.speed;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      this.x += this.speed;
     }
 
-    draw() {
-        image(this.sprite, this.x, this.y)
-    }
-
-    update() {
-        this.shootTimer++
-
-        if (keyIsDown(65)) {
-            this.x -= this.vel
-        }
-
-        if (keyIsDown(68)) {
-            this.x += this.vel
-        }
-
-        if (keyIsDown(32)) {
-            if (this.shootTimer > this.shootTime) {
-                bullets.push(new Bullet(this.x, this.y, playerBulletSprite, "Enemy"))
-                this.shootTimer = 0
-            }
-
-        }
-    }
+    this.x = constrain(this.x, this.width / 2, width - this.width / 2);
+  }
 }

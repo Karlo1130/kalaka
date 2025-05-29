@@ -1,37 +1,27 @@
 class Bullet {
-    
-    constructor(x, y, sprite, target) {
+  constructor(x, y, isEnemy = false) {
+    this.x = x;
+    this.y = y;
+    this.r = 5;
+    this.speed = isEnemy ? 5 : -7;
+    this.isEnemy = isEnemy;
+  }
 
-        this.x = x + 5
-        this.y = y - sprite.height
+  update() {
+    this.y += this.speed;
+  }
 
-        this.target = target
-
-        this.sprite = sprite
-
-        this.width = sprite.width
-        this.height = sprite.height
-
-        this.destroy = false;
-        
-        this.vel = 20
-
-        if (target == 'Player'){
-            this.vel = -8
-            this.y = y + this.height
-        }
+  show() {
+    noStroke();
+    if (this.isEnemy) {
+      fill(255, 0, 0);
+    } else {
+      fill(73, 2, 173);
     }
+    ellipse(this.x, this.y, this.r * 2);
+  }
 
-    draw() {
-        image(this.sprite, this.x, this.y)
-    }
-
-    update() {
-        this.y -= this.vel
-
-        if (this.y <= -1) {
-            this.destroy = !this.destroy
-        }
-
-    }
+  offScreen() {
+    return this.y < 0 || this.y > height;
+  }
 }

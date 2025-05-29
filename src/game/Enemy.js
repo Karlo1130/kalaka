@@ -1,135 +1,32 @@
-class Enemy{
+class Enemy {
+  constructor(x, y) {
+    this.x = x;  // Centro X del enemigo
+    this.y = y;  // Centro Y del enemigo
+    this.size = 30; // Diámetro del círculo de colisión
+    this.speed = 1;
+    this.isAlive = true;
+    this.img = enemyImg;
+  }
 
-    constructor(x, y, sprite, type) {
-        this.x = x
-        this.y = y 
+  update() {
+    this.y += this.speed;
+  }
 
-        this.type = type
-
-        this.sprite = sprite
-        
-        this.width = sprite.width
-        this.height = sprite.height
-
-        this.destroy = false
-
-        this.shootTime = 300
-        this.shootTimer = 0
-
-        this.moveTime = 150
-        this.moveTimer = 0
-
-        switch (type) {
-
-            case enemyTypes.pink:
-
-                this.n = 1
-                this.dir = 1
-                this.life = 1
-                break;
-
-            case enemyTypes.blue:
-                this.life = 3
-                this.shootTime = 130
-                
-                break;
-            case enemyTypes.purple:
-                this.n = 1
-                this.dir = 1
-                this.life = 2
-                
-                break;
-            case enemyTypes.yellow:
-                this.life = 7
-                this.shootTime = 70
-                this.moveTime = 100
-                
-                break;
-        
-            default:
-                this.life = 1
-                break;
-        }
+  show() {
+    if (this.isAlive) {
+      // Dibuja la imagen centrada en (x,y)
+      imageMode(CENTER);
+      image(this.img, this.x, this.y, this.size, this.size);
     }
+  }
 
-    draw() {
-        image(this.sprite, this.x, this.y)
+  hits(bullet) {
+    // Colisión circular simple (como en tu original)
+    let d = dist(this.x, this.y, bullet.x, bullet.y);
+    if (d < this.size / 2) {
+      this.isAlive = false;
+      return true;
     }
-
-    update() {
-
-        this.moveTimer++
-        this.shootTimer++
-
-        if (this.y >= Height - 30) {
-            player.life--
-            this.destroy = !this.destroy
-        }
-
-        if (this.destroy) {
-            enemys.splice(enemys.findIndex(enemy => enemy.destroy), 1)
-        }
-
-        if (isColliding(this, player)) {
-            player.life--
-            this.destroy = !this.destroy
-        }
-
-        if(this.moveTimer > this.moveTime) {
-            this.y += this.height
-
-            switch (this.type) {
-                case enemyTypes.pink:
-
-                    //movement algorithm
-                    this.n = this.n - this.dir
-                    if(this.n != 0) {
-                        this.dir = this.dir * -1
-                    }
-                    
-                    this.x += this.width * this.dir
-
-                    break;
-                case enemyTypes.purple:
-
-                    //movement algorithm
-                    this.n = this.n - this.dir
-                    if(this.n != 0) {
-                        this.dir = this.dir * -1
-                    }
-                    
-                    this.x += this.width * this.dir
-
-                    break;
-                case enemyTypes.yellow:
-
-                    break;
-        
-                default:
-                    break;
-            }
-
-            this.moveTimer = 0
-        }
-
-        if(this.shootTimer > this.shootTime) {
-
-            switch (this.type) {
-                case enemyTypes.blue:
-                case enemyTypes.red:
-                case enemyTypes.pink:
-                case enemyTypes.purple:
-                case enemyTypes.yellow:
-
-                    bullets.push(new Bullet(this.x, this.y, enemyBulletSprite, "Player"))
-                    break;
-        
-                default:
-                    break;
-            }
-
-            this.shootTimer = 0
-        }
-    }
-
+    return false;
+  }
 }
