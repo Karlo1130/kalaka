@@ -18,18 +18,18 @@ let bossSpawned = false;
 let isPaused = false;
 
 function preload() {
-  playerImg = loadImage("assets/playerShip.jpg");
-  enemyImg = loadImage("assets/normalEnemy.jpg");
-  zigzagEnemyImg = loadImage("assets/normalEnemy.jpg");
+  playerImg = loadImage("assets/playerShip.png");
+  enemyImg = loadImage("assets/normalEnemy.png");
+  zigzagEnemyImg = loadImage("assets/normalEnemy.png");
   // StrongEnemy por fases
-  strongEnemyImg[3] = loadImage("assets/miniBoss_3.jpg");
-  strongEnemyImg[2] = loadImage("assets/miniBoss_2.jpg");
-  strongEnemyImg[1] = loadImage("assets/miniBoss_1.jpg");
+  strongEnemyImg[3] = loadImage("assets/miniBoss_3.png");
+  strongEnemyImg[2] = loadImage("assets/miniBoss_2.png");
+  strongEnemyImg[1] = loadImage("assets/miniBoss_1.png");
 
   // BossEnemy por fases
-  bossImg[15] = loadImage("assets/boss_15.jpg");
-  bossImg[10] = loadImage("assets/boss_10.jpg");
-  bossImg[5] = loadImage("assets/boss_5.jpg");
+  bossImg[15] = loadImage("assets/boss_15.png");
+  bossImg[10] = loadImage("assets/boss_10.png");
+  bossImg[5] = loadImage("assets/boss_5.png");
 }
 
 function setup() {
