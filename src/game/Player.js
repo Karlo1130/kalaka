@@ -1,4 +1,3 @@
-
 // Clase que representa la nave del jugador
 class Player {
   constructor() {

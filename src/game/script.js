@@ -16,6 +16,10 @@ let levelCompleted = false;
 let bossDefeated = false;
 let bossSpawned = false;
 let isPaused = false;
+// Sonidos
+let backMusic;
+let shootSound;
+let hitSound;
 
 function preload() {
   playerImg = loadImage("assets/playerShip.png");
@@ -30,6 +34,12 @@ function preload() {
   bossImg[15] = loadImage("assets/boss_15.png");
   bossImg[10] = loadImage("assets/boss_10.png");
   bossImg[5] = loadImage("assets/boss_5.png");
+
+  //Sonidos
+  backMusic = loadSound("assets/backMusic.mp3");
+  shootSound = loadSound("assets/shoot.wav");
+  shootSound.setVolume(0.01);
+  hitSound = loadSound("assets/hit.wav");
 }
 
 function setup() {
@@ -37,6 +47,10 @@ function setup() {
   player = new Player();
   menu = new Menu();
   initLevel1();
+
+  backMusic.setLoop(true); // que se repita
+  backMusic.setVolume(0.03); // opcional
+  backMusic.play(); // comienza a sonar
 }
 
 function draw() {
@@ -98,6 +112,7 @@ function draw() {
       let d = dist(enemy.x, enemy.y, player.x, player.y);
       if (d < enemy.size / 2 + player.width / 2 || enemy.y > height) {
         enemy.isAlive = false;
+        hitSound.play();
         lives--;
       }
     }
@@ -111,6 +126,7 @@ function draw() {
       }
       let d = dist(enemyBullets[i].x, enemyBullets[i].y, player.x, player.y);
       if (d < player.width / 2) {
+        hitSound.play();
         lives--;
         enemyBullets.splice(i, 1);
       }
@@ -180,6 +196,7 @@ function keyPressed() {
   } else if (gameState === "playing") {
     if (key === " ") {
       bullets.push(new Bullet(player.x, player.y - 20));
+      shootSound.play();
     }
   } else if (gameState === "levelComplete") {
     if (keyCode === ENTER) {

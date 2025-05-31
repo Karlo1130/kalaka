@@ -1,7 +1,7 @@
 class Enemy {
   constructor(x, y) {
-    this.x = x;  // Centro X del enemigo
-    this.y = y;  // Centro Y del enemigo
+    this.x = x; // Centro X del enemigo
+    this.y = y; // Centro Y del enemigo
     this.size = 30; // Diámetro del círculo de colisión
     this.speed = 1;
     this.isAlive = true;
@@ -25,6 +25,7 @@ class Enemy {
     let d = dist(this.x, this.y, bullet.x, bullet.y);
     if (d < this.size / 2) {
       this.isAlive = false;
+      hitSound.play();
       return true;
     }
     return false;

@@ -68,6 +68,7 @@ class BossEnemy {
     let d = dist(this.x, this.y, bullet.x, bullet.y);
     if (d < (this.size / 2) * 0.8) {
       // Hitbox ligeramente más pequeña
+      hitSound.play();
       this.health--;
       if (this.health <= 0) {
         this.isAlive = false;
