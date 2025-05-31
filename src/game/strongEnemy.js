@@ -21,13 +21,15 @@ class StrongEnemy extends Enemy {
   show() {
     if (this.isAlive) {
       imageMode(CENTER);
-      image(this.img, this.x, this.y, this.size, this.size);
-      
-      // Muestra la salud
+
+      // Escoge imagen por vida
+      let imgToShow = strongEnemyImg[this.health] || strongEnemyImg[1];
+      image(imgToShow, this.x, this.y, this.size, this.size);
+
       fill(255);
       textAlign(CENTER, CENTER);
       textSize(12);
-      text(this.health, this.x, this.y + this.size/2 + 10);
+      text(this.health, this.x, this.y + this.size / 2 + 10);
     }
   }
 }

@@ -1,16 +1,15 @@
-
 let player;
 let playerImg;
-let bossImg;
 let enemyImg;
-let strongEnemyImg;
+let strongEnemyImg = {};
+let bossImg = {};
 let bullets = [];
 let enemies = [];
 let menu;
 let score = 0;
 let lives = 3;
-let level = 1;
-let gameState = 'menu';
+let level = 2;
+let gameState = "menu";
 let gameOver = false;
 let enemyBullets = [];
 let levelCompleted = false;
@@ -18,15 +17,20 @@ let bossDefeated = false;
 let bossSpawned = false;
 let isPaused = false;
 
-
 function preload() {
-  playerImg = loadImage('assets/playerShip.jpg');
-  bossImg = loadImage('assets/boss.jpg');
-  enemyImg = loadImage('assets/normalEnemy.jpg');
-  strongEnemyImg = loadImage('assets/miniBoss.jpg');
-  zigzagEnemyImg = loadImage('assets/normalEnemy.jpg');
-}
+  playerImg = loadImage("assets/playerShip.jpg");
+  enemyImg = loadImage("assets/normalEnemy.jpg");
+  zigzagEnemyImg = loadImage("assets/normalEnemy.jpg");
+  // StrongEnemy por fases
+  strongEnemyImg[3] = loadImage("assets/miniBoss_3.jpg");
+  strongEnemyImg[2] = loadImage("assets/miniBoss_2.jpg");
+  strongEnemyImg[1] = loadImage("assets/miniBoss_1.jpg");
 
+  // BossEnemy por fases
+  bossImg[15] = loadImage("assets/boss_15.jpg");
+  bossImg[10] = loadImage("assets/boss_10.jpg");
+  bossImg[5] = loadImage("assets/boss_5.jpg");
+}
 
 function setup() {
   createCanvas(1000, 700);
@@ -35,11 +39,10 @@ function setup() {
   initLevel1();
 }
 
-
 function draw() {
-  if (gameState === 'menu') {
+  if (gameState === "menu") {
     menu.display();
-  } else if (gameState === 'playing') {
+  } else if (gameState === "playing") {
     background(0);
 
     if (isPaused) {
@@ -113,8 +116,11 @@ function draw() {
       }
     }
 
-    if (level === 3 && enemies.every(e => !e.isAlive || e instanceof BossEnemy)) {
-      if (!bossSpawned && !enemies.some(e => e instanceof BossEnemy)) {
+    if (
+      level === 3 &&
+      enemies.every((e) => !e.isAlive || e instanceof BossEnemy)
+    ) {
+      if (!bossSpawned && !enemies.some((e) => e instanceof BossEnemy)) {
         enemies.push(new BossEnemy(width / 2, -100));
         bossSpawned = true;
       }
@@ -128,19 +134,18 @@ function draw() {
 
     if (lives <= 0) {
       saveScore(score);
-      gameState = 'gameover';
-    } else if (enemies.every(e => !e.isAlive)) {
+      gameState = "gameover";
+    } else if (enemies.every((e) => !e.isAlive)) {
       if (level === 3 && bossDefeated) {
         saveScore(score);
-        gameState = 'victory';
+        gameState = "victory";
       } else if (level < 3) {
-        gameState = 'levelComplete';
+        gameState = "levelComplete";
       }
     }
-
-  } else if (gameState === 'levelComplete') {
+  } else if (gameState === "levelComplete") {
     showLevelComplete(level);
-  } else if (gameState === 'gameover') {
+  } else if (gameState === "gameover") {
     background(0);
     fill(255, 0, 0);
     textAlign(CENTER);
@@ -149,7 +154,7 @@ function draw() {
     textSize(16);
     text(`Puntaje final: ${score}`, width / 2, height / 2);
     text("Presiona 'M' para volver al menú", width / 2, height / 2 + 40);
-  } else if (gameState === 'victory') {
+  } else if (gameState === "victory") {
     background(0);
     fill(0, 255, 0);
     textAlign(CENTER);
@@ -162,22 +167,21 @@ function draw() {
   }
 }
 
-
 function keyPressed() {
-  if (key === 'P' || key === 'p') {
-    if (gameState === 'playing') {
+  if (key === "P" || key === "p") {
+    if (gameState === "playing") {
       isPaused = !isPaused;
     }
   }
-  if (gameState === 'menu') {
-    if (key === ' ') {
-      gameState = 'playing';
+  if (gameState === "menu") {
+    if (key === " ") {
+      gameState = "playing";
     }
-  } else if (gameState === 'playing') {
-    if (key === ' ') {
+  } else if (gameState === "playing") {
+    if (key === " ") {
       bullets.push(new Bullet(player.x, player.y - 20));
     }
-  } else if (gameState === 'levelComplete') {
+  } else if (gameState === "levelComplete") {
     if (keyCode === ENTER) {
       level++;
       if (level === 2) {
@@ -185,25 +189,21 @@ function keyPressed() {
       } else if (level === 3) {
         initLevel3();
       }
-      gameState = 'playing';
+      gameState = "playing";
     }
-  } else if (gameState === 'victory') {
-    if (key === 'R' || key === 'r') {
+  } else if (gameState === "victory") {
+    if (key === "R" || key === "r") {
       resetGame();
-      gameState = 'playing';
-    } else if (key === 'M' || key === 'm') {
+      gameState = "playing";
+    } else if (key === "M" || key === "m") {
       resetGame();
-      gameState = 'menu';
+      gameState = "menu";
     }
-  } else if (key === 'M' || key === 'm') {
+  } else if (key === "M" || key === "m") {
     resetGame();
-    gameState = 'menu';
+    gameState = "menu";
   }
 }
-
-
-
-
 
 function showLevelComplete(levelNumber) {
   background(0);
@@ -216,17 +216,16 @@ function showLevelComplete(levelNumber) {
 }
 
 function saveScore(newScore) {
-  let scores = JSON.parse(localStorage.getItem('galagaScores')) || [];
+  let scores = JSON.parse(localStorage.getItem("galagaScores")) || [];
   scores.push(newScore);
   scores.sort((a, b) => b - a);
   scores = scores.slice(0, 5);
-  localStorage.setItem('galagaScores', JSON.stringify(scores));
+  localStorage.setItem("galagaScores", JSON.stringify(scores));
 }
 
 function getTopScores() {
-  return JSON.parse(localStorage.getItem('galagaScores')) || [];
+  return JSON.parse(localStorage.getItem("galagaScores")) || [];
 }
-
 
 function resetGame() {
   lives = 3;
@@ -241,7 +240,6 @@ function resetGame() {
 }
 
 function initLevel1() {
-
   bullets = [];
   enemyBullets = [];
 
@@ -254,7 +252,6 @@ function initLevel1() {
 }
 
 function initLevel2() {
-
   bullets = [];
   enemyBullets = [];
 
@@ -270,7 +267,6 @@ function initLevel2() {
 }
 
 function initLevel3() {
-
   bullets = [];
   enemyBullets = [];
 
@@ -278,13 +274,11 @@ function initLevel3() {
   bossSpawned = false;
   bossDefeated = false;
 
-
   for (let i = 0; i < 5; i++) {
     let e = new EnemyZigzag(random(50, width - 50), random(-500, -50), 3);
     e.canShoot = true;
     enemies.push(e);
   }
-
 
   enemies.push(new StrongEnemy(random(100, 200), random(-400, -200), 3));
   enemies.push(new StrongEnemy(random(300, 500), random(-400, -200), 3));

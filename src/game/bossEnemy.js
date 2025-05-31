@@ -39,20 +39,35 @@ class BossEnemy {
 
   show() {
     if (!this.isAlive) return;
-    imageMode(CENTER);
-    image(this.img, this.x, this.y, this.size, this.size);
 
-    // Barra de salud
+    imageMode(CENTER);
+
+    let imgToShow;
+    if (this.health > 10) {
+      imgToShow = bossImg[15];
+    } else if (this.health > 5) {
+      imgToShow = bossImg[10];
+    } else {
+      imgToShow = bossImg[5];
+    }
+
+    image(imgToShow, this.x, this.y, this.size, this.size);
+
     fill(255, 0, 0);
     rect(this.x - this.size / 2, this.y - this.size / 2 - 15, this.size, 5);
     fill(0, 255, 0);
-    rect(this.x - this.size / 2, this.y - this.size / 2 - 15,
-      this.size * (this.health / 15), 5);
+    rect(
+      this.x - this.size / 2,
+      this.y - this.size / 2 - 15,
+      this.size * (this.health / 15),
+      5
+    );
   }
 
   hits(bullet) {
     let d = dist(this.x, this.y, bullet.x, bullet.y);
-    if (d < this.size / 2 * 0.8) { // Hitbox ligeramente más pequeña
+    if (d < (this.size / 2) * 0.8) {
+      // Hitbox ligeramente más pequeña
       this.health--;
       if (this.health <= 0) {
         this.isAlive = false;
