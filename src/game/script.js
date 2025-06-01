@@ -8,7 +8,7 @@ let enemies = [];
 let menu;
 let score = 0;
 let lives = 3;
-let level = 2;
+let level = 1;
 let gameState = "menu";
 let gameOver = false;
 let enemyBullets = [];
@@ -144,9 +144,9 @@ function draw() {
 
     fill(255);
     textSize(16);
-    text(`Puntaje: ${score}`, 10, 20);
-    text(`Nivel: ${level}`, 10, 40);
-    text(`Vidas: ${lives}`, 10, 60);
+    text(`Puntaje: ${score}`, 40, 20);
+    text(`Nivel: ${level}`, 40, 40);
+    text(`Vidas: ${lives}`, 40, 60);
 
     if (lives <= 0) {
       saveScore(score);
